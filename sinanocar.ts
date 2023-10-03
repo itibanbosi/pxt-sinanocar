@@ -157,7 +157,7 @@ namespace sinamon {
     export function car_stepmove(sinkou_houkou: direction2, step: number): void {
         switch (sinkou_houkou) {
             case direction2.forward:
-                ステップ前(20)
+                ステップ前(step)
                 break;
             case direction2.right_rotation:
                 ステップ右回転(step)

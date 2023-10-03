@@ -86,6 +86,18 @@ namespace sinamon {
         Stop
     }
 
+    export enum direction2 {
+        //% block="forward"
+        forward,
+        //% block="right_rotation",
+        right_rotation,
+        //% block="left_rotation",
+        left_rotation,
+        //% block="backward",
+        backward
+    }
+
+
     pins.onPulsed(DigitalPin.P6, PulseValue.High, function () {
         右カウンター += 1
     })
@@ -142,18 +154,18 @@ namespace sinamon {
     //% color="#3943c6" weight=89 
     //% block="Move |%sinkou_houkou|,|%step|step" group="1 Basic movement"
     //% step.min=0 step.max=50 Power.defl=0
-    export function car_stepmove(sinkou_houkou: direction, step: number): void {
+    export function car_stepmove(sinkou_houkou: direction2, step: number): void {
         switch (sinkou_houkou) {
-            case direction.forward:
+            case direction2.forward:
                 ステップ前(20)
                 break;
-            case direction.right_rotation:
+            case direction2.right_rotation:
                 ステップ右回転(step)
                 break;
-            case direction.left_rotation:
+            case direction2.left_rotation:
                 ステップ左回転(step)
                 break;
-            case direction.backward:
+            case direction2.backward:
                 ステップ後ろ(step)
                 break;
         }

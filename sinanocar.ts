@@ -84,51 +84,27 @@ namespace sinamon {
     //% block="Move |%sinkou_houkou|,power|%Power|" group="1 Basic movement"
     //% Power.min=0 Power.max=100 Power.defl=100
     export function car_derection(sinkou_houkou: direction, Power: number): void {
-        pins.setEvents(DigitalPin.P6, PinEventType.None)
-        pins.setEvents(DigitalPin.P7, PinEventType.None)
+        //pins.setEvents(DigitalPin.P6, PinEventType.None)
+        //pins.setEvents(DigitalPin.P7, PinEventType.None)
 
         switch (sinkou_houkou) {
             case direction.forward:
-                pins.analogWritePin(AnalogPin.P2, Power * 10.23)
-                pins.analogWritePin(AnalogPin.P13, 0)
-
-                pins.analogWritePin(AnalogPin.P15, 0)
-                pins.analogWritePin(AnalogPin.P16, Power * 10.23)
+                連続前進()
                 break;
             case direction.left:
-                pins.analogWritePin(AnalogPin.P2, 0)
-                pins.analogWritePin(AnalogPin.P13, 0)
-
-                pins.analogWritePin(AnalogPin.P15, 0)
-                pins.analogWritePin(AnalogPin.P16, Power * 10.23)
+                連続左折()
                 break;
             case direction.right:
-                pins.analogWritePin(AnalogPin.P2, Power * 10.23)
-                pins.analogWritePin(AnalogPin.P13, 0)
-
-                pins.analogWritePin(AnalogPin.P15, 0)
-                pins.analogWritePin(AnalogPin.P16, 0)
+                連続右折()
                 break;
             case direction.right_rotation:
-                pins.analogWritePin(AnalogPin.P2, Power * 10.23)
-                pins.analogWritePin(AnalogPin.P13, 0)
-
-                pins.analogWritePin(AnalogPin.P15, Power * 10.23)
-                pins.analogWritePin(AnalogPin.P16, 0)
+                連続右回転()
                 break;
             case direction.left_rotation:
-                pins.analogWritePin(AnalogPin.P2, 0)
-                pins.analogWritePin(AnalogPin.P13, Power * 10.23)
-
-                pins.analogWritePin(AnalogPin.P15, 0)
-                pins.analogWritePin(AnalogPin.P16, Power * 10.23)
+                連続左回転()
                 break;
             case direction.backward:
-                pins.analogWritePin(AnalogPin.P2, 0)
-                pins.analogWritePin(AnalogPin.P13, Power * 10.23)
-
-                pins.analogWritePin(AnalogPin.P15, Power * 10.23)
-                pins.analogWritePin(AnalogPin.P16, 0)
+                連続後進()
                 break;
             case direction.Stop:
                 pins.analogWritePin(AnalogPin.P2, 0)
@@ -136,6 +112,29 @@ namespace sinamon {
 
                 pins.analogWritePin(AnalogPin.P15, 0)
                 pins.analogWritePin(AnalogPin.P16, 0)
+                break;
+        }
+    }
+
+
+
+
+    //% color="#3943c6" weight=89 
+    //% block="Move |%sinkou_houkou|,step|%step|" group="1 Basic movement"
+    //% step.min=0 step.max=50 Power.defl=0
+    export function car_stepmove(sinkou_houkou: direction, step: number): void {
+        switch (sinkou_houkou) {
+            case direction.forward:
+                ステップ前(step)
+                break;
+            case direction.right_rotation:
+                ステップ右回転(step)
+                break;
+            case direction.left_rotation:
+                ステップ左回転(step)
+                break;
+            case direction.backward:
+                ステップ後ろ(step)
                 break;
         }
     }
@@ -393,11 +392,8 @@ pins.setPull(DigitalPin.P7, PinPullMode.PullNone)
 led.enable(false)
 pins.setEvents(DigitalPin.P6, PinEventType.Pulse)
 pins.setEvents(DigitalPin.P7, PinEventType.Pulse)
-ステップ前(40)
-ステップ後ろ(40)
-ステップ左回転(40)
-ステップ右回転(40)
-music.play(music.tonePlayable(262, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
+
+//music.play(music.tonePlayable(262, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
 basic.forever(function () {
     if (走行モード == 1) {
         if (左カウンター < 右カウンター) {

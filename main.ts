@@ -1,3 +1,3 @@
 basic.forever(function () {
-    sinamon.car_derection(sinamon.direction.forward, 100)
+    sinamon.car_derection(sinamon.direction.backward, 10)
 })

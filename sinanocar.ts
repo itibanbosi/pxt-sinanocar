@@ -52,13 +52,19 @@ let L_ki = 0
 let L_kp = 0
 let R_ki = 0
 let R_kp = 0
-let R_power = 0
-let L_power = 0
+
 R_kp = 20
 R_ki = 15
 L_kp = 20
 L_ki = 15
 
+// 制御周期分だけ待つ処理（ｍｓ）
+T = 0.01
+pins.setPull(DigitalPin.P6, PinPullMode.PullNone)
+pins.setPull(DigitalPin.P7, PinPullMode.PullNone)
+led.enable(false)
+pins.setEvents(DigitalPin.P6, PinEventType.Pulse)
+pins.setEvents(DigitalPin.P7, PinEventType.Pulse)
 
 //% color="#ff4500" weight=94 
 namespace sinamon {
@@ -79,6 +85,20 @@ namespace sinamon {
         //% block="Stop",
         Stop
     }
+
+    pins.onPulsed(DigitalPin.P6, PulseValue.High, function () {
+        右カウンター += 1
+    })
+    pins.onPulsed(DigitalPin.P6, PulseValue.Low, function () {
+        右カウンター += 1
+    })
+    pins.onPulsed(DigitalPin.P7, PulseValue.High, function () {
+        左カウンター += 1
+    })
+    pins.onPulsed(DigitalPin.P7, PulseValue.Low, function () {
+        左カウンター += 1
+    })
+
 
     //% color="#3943c6" weight=88 
     //% block="Move |%sinkou_houkou|,power|%Power|" group="1 Basic movement"
@@ -120,12 +140,12 @@ namespace sinamon {
 
 
     //% color="#3943c6" weight=89 
-    //% block="Move |%sinkou_houkou|,step|%step|" group="1 Basic movement"
+    //% block="Move |%sinkou_houkou|,|%step|step" group="1 Basic movement"
     //% step.min=0 step.max=50 Power.defl=0
     export function car_stepmove(sinkou_houkou: direction, step: number): void {
         switch (sinkou_houkou) {
             case direction.forward:
-                ステップ前(step)
+                ステップ前(20)
                 break;
             case direction.right_rotation:
                 ステップ右回転(step)
@@ -193,9 +213,8 @@ function 左回転(STEP: number) {
         }
     }
 }
-pins.onPulsed(DigitalPin.P6, PulseValue.Low, function () {
-    右カウンター += 1
-})
+
+
 function ステップ後ろ(数値: number) {
     ステップモード = 2
     ステップ動作(数値)
@@ -204,9 +223,7 @@ function ステップ左回転(数値: number) {
     ステップモード = 3
     ステップ動作(数値)
 }
-pins.onPulsed(DigitalPin.P7, PulseValue.High, function () {
-    左カウンター += 1
-})
+
 function 連続右回転() {
     走行モード = 6
     pins.digitalWritePin(DigitalPin.P13, 0)
@@ -374,16 +391,12 @@ function ステップ前(数値: number) {
     ステップモード = 1
     ステップ動作(数値)
 }
-pins.onPulsed(DigitalPin.P7, PulseValue.Low, function () {
-    左カウンター += 1
-})
+
 function ステップ右回転(数値: number) {
     ステップモード = 4
     ステップ動作(数値)
 }
-pins.onPulsed(DigitalPin.P6, PulseValue.High, function () {
-    右カウンター += 1
-})
+
 
 // 制御周期分だけ待つ処理（ｍｓ）
 T = 0.01

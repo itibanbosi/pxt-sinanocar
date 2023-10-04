@@ -665,7 +665,8 @@ function ステップ右回転(数値: number) {
     //% color="#ffa500"  weight=35 block="values red" group="8 color senser"
     //% advanced=true
     export function getRed(): number {
-        return Math.round(rgb()[0])
+
+        return Math.round(rgb()[0] / Math.max(rgb()[0], Math.max(rgb()[1], rgb()[2]))*256)
     }
 
 
@@ -673,7 +674,7 @@ function ステップ右回転(数値: number) {
     //% color="#ffa500"  weight=35 block="values green" group="8 color senser"
     //% advanced=true
     export function getGreen(): number {
-        return Math.round(rgb()[1])
+        return Math.round(rgb()[1] / Math.max(rgb()[0], Math.max(rgb()[1], rgb()[2])) * 256)
     }
 
 
@@ -682,7 +683,7 @@ function ステップ右回転(数値: number) {
     //% color="#ffa500"  weight=35 block="values blue" group="8 color senser"
     //% advanced=true
     export function getBlue(): number {
-        return Math.round(rgb()[2])
+        return Math.round(rgb()[2] / Math.max(rgb()[0], Math.max(rgb()[1], rgb()[2])) * 256)
     }
 
 

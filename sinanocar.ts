@@ -277,7 +277,7 @@ function 左回転(STEP: number) {
         } else if (L_U <= 0) {
             L_U = 0
         }
-        serial.writeNumbers([左カウンター, L_U])
+        //serial.writeNumbers([左カウンター, L_U])
         pins.analogWritePin(AnalogPin.P13, L_U)
         pins.digitalWritePin(DigitalPin.P2, 0)
         L_e_pre = L_e
@@ -377,7 +377,7 @@ function ステップ動作(STEP: number) {
         } else if (L_U <= 0) {
             L_U = 0
         }
-        serial.writeNumbers([左カウンター, L_U])
+        //serial.writeNumbers([左カウンター, L_U])
         if (ステップモード == 1) {
             pins.analogWritePin(AnalogPin.P16, R_U)
             pins.digitalWritePin(DigitalPin.P15, 0)
@@ -451,7 +451,7 @@ function 右回転(STEP: number) {
         } else if (L_U <= 0) {
             L_U = 0
         }
-        serial.writeNumbers([左カウンター, L_U])
+        //serial.writeNumbers([左カウンター, L_U])
         pins.analogWritePin(AnalogPin.P2, L_U)
         pins.digitalWritePin(DigitalPin.P14, 0)
         L_e_pre = L_e
@@ -876,7 +876,7 @@ function ステップ右回転(数値: number) {
                 pins.analogWritePin(AnalogPin.P15, 1023)
             }
         }
-        serial.writeNumbers([左カウンター, 右カウンター])
+        //serial.writeNumbers([左カウンター, 右カウンター])
     })
 
 
